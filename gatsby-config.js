@@ -8,16 +8,16 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `posts`,
-        path: `${__dirname}/content/posts`
-      }
+        path: `${__dirname}/content/posts`,
+      },
     },
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `src`,
-    //     path: `${__dirname}/src/`,
-    //   },
-    // },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `data`,
+        path: `${__dirname}/content/data`,
+      },
+    },
     {
       resolve: `gatsby-plugin-typography`,
       options: {
@@ -25,5 +25,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-remark`,
+    `gatsby-transformer-yaml`,
   ],
 }

@@ -1,6 +1,12 @@
 const path = require(`path`)
 
-module.exports = async ({ graphql, actions }) => {
+module.exports = props => {
+  createPostPages(props)
+  createPostListPages(props)
+  createTechPages(props)
+}
+
+const createPostPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const posts = await graphql(`
     query {
@@ -25,7 +31,9 @@ module.exports = async ({ graphql, actions }) => {
       },
     })
   })
+}
 
+const createPostListPages = ({ actions: { createPage } }) => {
   const typesSlugsMap = {
     explain: `/explains/`,
     standalone: `/tutorials/standalones/`,
@@ -46,6 +54,35 @@ module.exports = async ({ graphql, actions }) => {
       context: {
         type,
         typePlural: typesPluralMap[type],
+      },
+    })
+  })
+}
+
+const createTechPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const results = await graphql(`
+    query {
+      allTechListYaml {
+        edges {
+          node {
+            title
+            slug
+            summary
+            type
+            logo
+          }
+        }
+      }
+    }
+  `)
+
+  results.data.allTechListYaml.edges.forEach(({ node }) => {
+    createPage({
+      path: `/techs/${node.slug}`,
+      component: path.resolve(`./src/templates/tech-page.js`),
+      context: {
+        slug: node.slug,
       },
     })
   })

@@ -1,0 +1,44 @@
+- title: JavaScript
+  slug: javascript
+  type: language
+  summary: Lorem ipsum dolor
+  logo: /this/is/url/
+  websites:
+    - https://developer.mozilla.org/en-US/docs/Web/JavaScript
+
+- title: HTML
+  slug: html
+  type: language
+  summary: Lorem ipsum dolor
+  logo: /this/is/url/
+  websites:
+    - https://developer.mozilla.org/en-US/docs/Web/HTML
+
+- title: CSS
+  slug: css
+  type: language
+  websites:
+    - https://developer.mozilla.org/en-US/docs/Web/CSS
+
+- title: Gatsby.js
+  slug: gatsby.js
+  type: framework
+
+- title: GraphQL
+  slug: graphql
+  type: library
+
+- title: Node.js
+  type: language
+
+- title: PHP
+  type: language
+
+- title: Netlify
+  type: hosting
+
+- title: DigitalOcean
+  type: hosting
+
+- title: AWS SES
+  type: mail-server

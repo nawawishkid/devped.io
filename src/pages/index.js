@@ -9,6 +9,7 @@ const items = [
   { label: `สอนทำยาว ๆ`, url: `/tutorials/series/` },
   { label: `อธิบาย`, url: `/explains/` },
   { label: `สอนทำสั้น ๆ`, url: `/tutorials/standalones/` },
+  { label: `เทคฯ`, url: `/techs/` },
 ]
 const IndexPage = () => {
   return (
