@@ -1,9 +1,9 @@
 const path = require(`path`)
 
-module.exports = props => {
-  createPostPages(props)
-  createPostListPages(props)
-  createTechPages(props)
+module.exports = async props => {
+  await createPostPages(props)
+  await createPostListPages(props)
+  await createTechPages(props)
 }
 
 const createPostPages = async ({ graphql, actions }) => {
