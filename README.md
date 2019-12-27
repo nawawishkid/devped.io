@@ -11,6 +11,7 @@
 - Markdown content
   - [] Consider using `mdx`?
   - [] Code highlighting
+  - [] Support emoji
 - [] SEO
 - [] Google Analytics
 - [] PWA

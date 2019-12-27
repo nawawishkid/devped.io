@@ -31,9 +31,14 @@ module.exports = {
           {
             resolve: `gatsby-remark-emojis`,
             options: {
-              active: false,
-              size: 64,
+              active: true,
+              size: 32,
             },
+          },
+          {
+            // Plugin above does not support ASCII, so here we are.
+            resolve: `gatsby-remark-emoji`,
+            options: { ascii: true },
           },
         ],
       },
