@@ -24,7 +24,20 @@ module.exports = {
         pathToConfigModule: `src/utils/typography`,
       },
     },
-    `gatsby-transformer-remark`,
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        plugins: [
+          {
+            resolve: `gatsby-remark-emojis`,
+            options: {
+              active: false,
+              size: 64,
+            },
+          },
+        ],
+      },
+    },
     `gatsby-transformer-yaml`,
   ],
 }
