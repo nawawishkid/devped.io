@@ -9,6 +9,18 @@ module.exports = ({ createResolvers }) => {
 
 const createPostResolver = () => ({
   Post: {
+    stack: {
+      async resolve(source, args, context) {
+        const techs = await context.nodeModel.runQuery({
+          query: { filter: { title: { in: source.frontmatter.stack } } },
+          type: `Tech`,
+        })
+
+        console.log(`techs: `, techs)
+
+        return techs
+      },
+    },
     html: {
       async resolve(source, args, context) {
         const mdNode = await context.nodeModel.runQuery({

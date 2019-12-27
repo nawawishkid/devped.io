@@ -83,6 +83,7 @@ const createTechPages = async ({ graphql, actions }) => {
       component: path.resolve(`./src/templates/tech-page.js`),
       context: {
         slug: node.slug,
+        title: node.title,
       },
     })
   })
