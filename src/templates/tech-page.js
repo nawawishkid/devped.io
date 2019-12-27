@@ -16,7 +16,7 @@ const TechPage = ({ data }) => {
               href={url}
               title={url}
               target="_blank"
-              rel="noopener"
+              rel="noopener noreferrer"
               key={index}
             >
               <li>{url}</li>
