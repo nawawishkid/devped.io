@@ -1,8 +1,8 @@
 import React from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 
 const RequirementPost = ({ data }) => {
-  const { post } = data
+  const { post, relatedPosts } = data
 
   return (
     <div>
@@ -11,12 +11,22 @@ const RequirementPost = ({ data }) => {
       <div>
         <h3>User stories</h3>
         <ul>
-          {post.frontmatter.stories.map(story => (
-            <li>{story}</li>
+          {post.frontmatter.stories.map((story, index) => (
+            <li key={index}>{story}</li>
           ))}
         </ul>
       </div>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      <div>
+        <h3>Related posts</h3>
+        <ul>
+          {relatedPosts.edges.map(({ node }) => (
+            <Link to={node.slug} key={node.id}>
+              <li>{node.title}</li>
+            </Link>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
@@ -33,6 +43,15 @@ export const query = graphql`
       updatedAt
       slug
       html
+    }
+    relatedPosts: allPost(filter: { frontmatter: { parent: { eq: $slug } } }) {
+      edges {
+        node {
+          id
+          title
+          slug
+        }
+      }
     }
   }
 `
