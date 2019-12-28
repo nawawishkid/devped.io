@@ -2,6 +2,7 @@
 
 ## Todos
 
+- [x] Support `requirements` post
 - [ ] Display techs by type
 - [ ] Support post cover image
 - [ ] Only display `'published'` posts

@@ -39,12 +39,14 @@ const createPostListPages = ({ actions: { createPage } }) => {
     standalone: `/tutorials/standalones/`,
     series: `/tutorials/series/`,
     class: `/classes/`,
+    requirement: `/requirements/`,
   }
   const typesPluralMap = {
     explain: `explains`,
     standalones: `standalones`,
     series: `series`,
     class: `classes`,
+    requirement: `requirements`,
   }
 
   Object.entries(typesSlugsMap).forEach(([type, slug]) => {
