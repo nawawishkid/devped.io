@@ -49,15 +49,18 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
   })
 
   // Create page for each post
-  allPost.edges.forEach(({ node }) => {
-    const url = `/` + node.locale + node.slug
-    createPage({
-      path: url,
-      component: path.resolve(`./src/templates/${node.type}-post.js`),
-      context: {
-        slug: node.slug,
-        locale: node.locale,
-      },
+  locales.forEach(locale => {
+    allPost.edges.forEach(({ node }) => {
+      const url = `/` + locale + node.slug
+      console.log(`url: `, url)
+      createPage({
+        path: url,
+        component: path.resolve(`./src/templates/${node.type}-post.js`),
+        context: {
+          slug: node.slug,
+          locale: locale,
+        },
+      })
     })
   })
 
