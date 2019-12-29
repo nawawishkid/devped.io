@@ -21,6 +21,7 @@ export const query = graphql`
       html
       title
       updatedAt
+      locale
     }
   }
 `

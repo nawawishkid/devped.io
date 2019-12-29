@@ -1,12 +1,14 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Link from "../components/link"
+import PostLocaleWarning from "../components/post-locale-warning"
 
 const RequirementPost = ({ data }) => {
   const { post, relatedPosts } = data
 
   return (
     <div>
+      <PostLocaleWarning locale={post.locale} />
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
       <div>
@@ -44,6 +46,7 @@ export const query = graphql`
       updatedAt
       slug
       html
+      locale
     }
     relatedPosts: allPost(filter: { frontmatter: { parent: { eq: $slug } } }) {
       edges {
