@@ -5,6 +5,7 @@ module.exports = ({ actions }) => {
       tree: PostTree
       html: String
       stack: [Tech]
+      locale: String
     }
     type PostTree {
       children: [Post]

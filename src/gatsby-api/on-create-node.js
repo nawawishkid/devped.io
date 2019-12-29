@@ -23,6 +23,7 @@ const createPostNode = ({
     status: frontmatter.status,
     type: frontmatter.type,
     frontmatter,
+    locale: frontmatter.locale,
     createdAt: frontmatter.createdAt || fileNode.ctime,
     updatedAt: frontmatter.updatedAt || fileNode.mtime,
     treeRef: {

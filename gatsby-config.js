@@ -1,6 +1,8 @@
 module.exports = {
   siteMetadata: {
     title: `Pandas eating lots`,
+    locales: [`en`, `th`],
+    defaultLocale: `en`
   },
   plugins: [
     `gatsby-plugin-emotion`,

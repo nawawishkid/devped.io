@@ -1,40 +1,38 @@
 import React from "react"
 import { Link } from "gatsby"
+import Layout from "../components/layout"
+import { withLocaleProvider } from "../contexts/locale"
 // import { css } from "@emotion/core"
 // import { rhythm } from "../utils/typography"
 // import Layout from "../components/layout"
 
-const items = [
-  { label: `คลาส`, url: `/classes/` },
-  { label: `สอนทำยาว ๆ`, url: `/tutorials/series/` },
-  { label: `อธิบาย`, url: `/explains/` },
-  { label: `สอนทำสั้น ๆ`, url: `/tutorials/standalones/` },
-  { label: `เทคฯ`, url: `/techs/` },
-  { label: `ความต้องการ`, url: `/requirements/` },
-]
+// const items = [
+//   { label: `คลาส`, url: `/classes/` },
+//   { label: `สอนทำยาว ๆ`, url: `/tutorials/series/` },
+//   { label: `อธิบาย`, url: `/explains/` },
+//   { label: `สอนทำสั้น ๆ`, url: `/tutorials/standalones/` },
+//   { label: `เทคฯ`, url: `/techs/` },
+//   { label: `ความต้องการ`, url: `/requirements/` },
+// ]
 const IndexPage = () => {
-  return (
-    <>
-      <NavBar items={items} />
-    </>
-  )
+  return <Layout>Homepage!!</Layout>
 }
 
-const NavBar = ({ items }) => {
-  return (
-    <nav>
-      <ul>
-        {items.map((item, index) => (
-          <Link to={item.url} key={index}>
-            <li>{item.label}</li>
-          </Link>
-        ))}
-      </ul>
-    </nav>
-  )
-}
+// const NavBar = ({ items }) => {
+//   return (
+//     <nav>
+//       <ul>
+//         {items.map((item, index) => (
+//           <Link to={item.url} key={index}>
+//             <li>{item.label}</li>
+//           </Link>
+//         ))}
+//       </ul>
+//     </nav>
+//   )
+// }
 
-export default IndexPage
+export default withLocaleProvider(IndexPage)
 // const contentTypesWord = {
 //   class: `classes`,
 //   explain: `explains`,

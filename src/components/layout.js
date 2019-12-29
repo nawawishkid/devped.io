@@ -1,48 +1,25 @@
 import React from "react"
-import { css } from "@emotion/core"
-import { Link, useStaticQuery, graphql } from "gatsby"
-import { rhythm } from "../utils/typography"
+import NavBar from "./nav-bar"
+import { useLocale } from "../contexts/locale"
+import navs from "../../content/data/navs"
+import { translate } from "../utils/i18n"
+import LanguageSelector from "./language-selector"
 
-export default ({ children }) => {
-  const data = useStaticQuery(graphql`
-    query {
-      site {
-        siteMetadata {
-          title
-        }
-      }
-    }
-  `)
+const Layout = ({ children }) => {
+  const locale = useLocale()
+  const navItems = Object.entries(navs).map(([key, value]) => ({
+    label: translate(`nav`, key, locale, `en`),
+    ...value,
+    url: `/` + locale + value.url,
+  }))
 
   return (
-    <div
-      css={css`
-        margin: 0 auto;
-        max-width: 700px;
-        padding: ${rhythm(2)};
-        padding-top: ${rhythm(1.5)};
-      `}
-    >
-      <Link to={`/`}>
-        <h3
-          css={css`
-            margin-bottom: ${rhythm(2)};
-            display: inline-block;
-            font-style: normal;
-          `}
-        >
-          {data.site.siteMetadata.title}
-        </h3>
-      </Link>
-      <Link
-        to={`/about/`}
-        css={css`
-          float: right;
-        `}
-      >
-        About
-      </Link>
+    <>
+      <NavBar items={navItems}></NavBar>
+      <LanguageSelector />
       {children}
-    </div>
+    </>
   )
 }
+
+export default Layout

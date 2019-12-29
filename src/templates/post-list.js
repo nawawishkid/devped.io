@@ -1,28 +1,32 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PostItem from "../components/post-item"
+import { withLocaleProvider } from "../contexts/locale"
+import Layout from "../components/layout"
+import { translate } from "../utils/i18n"
 
-const PostList = ({ data, pageContext, ...rest }) => {
+const PostList = ({ data, pageContext }) => {
   const posts = data.allPost.edges
-  console.log(`posts: `, posts);
+  const { postType, locale } = pageContext
 
   return (
-    <>
+    <Layout>
       <h1>
-        All {pageContext.typePlural} ({posts.length})
+        {translate(`post-list`, `all ${postType}`, locale, `en`)} (
+        {posts.length})
       </h1>
       {posts.map(({ node }) => (
         <PostItem {...node} key={node.id} />
       ))}
-    </>
+    </Layout>
   )
 }
 
-export default PostList
+export default withLocaleProvider(PostList)
 
 export const query = graphql`
-  query($type: String!) {
-    allPost(filter: { type: { eq: $type } }) {
+  query($postType: String!) {
+    allPost(filter: { type: { eq: $postType } }) {
       edges {
         node {
           id

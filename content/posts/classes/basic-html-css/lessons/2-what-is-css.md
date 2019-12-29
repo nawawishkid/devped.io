@@ -7,6 +7,7 @@ stack: ["HTML"]
 parent: "/classes/basic-html-css/"
 prev: "/classes/basic-html-css/lessons/1-what-is-html/"
 next: "/classes/basic-html-css/lessons/3-using-html-with-css/"
+locale: en
 ---
 
 Lorem ipsum dolor

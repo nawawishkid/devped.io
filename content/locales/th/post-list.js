@@ -1,0 +1,8 @@
+export default {
+  "all class": "คลาสทั้งหมด",
+  "all series": "ซีรีย์ส์ทั้งหมด",
+  "all explain": "อธิบายทั้งหมด",
+  "all standalone": "สแตนด์อโลนทั้งหมด",
+  "all tech": "เทคโนโลยีทั้งหมด",
+  "all requirement": "ความต้องการทั้งหมด",
+}
