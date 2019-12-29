@@ -28,6 +28,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
   const { allPost, site } = results.data
   const { locales, defaultLocale } = site.siteMetadata
 
+  // Create homepage for each locale
   locales.forEach(locale => {
     createPage({
       path: `/${locale}/`,
@@ -47,10 +48,9 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
     },
   })
 
+  // Create page for each post
   allPost.edges.forEach(({ node }) => {
-    console.log(`node: `, node)
     const url = `/` + node.locale + node.slug
-    console.log(`url: `, url)
     createPage({
       path: url,
       component: path.resolve(`./src/templates/${node.type}-post.js`),
@@ -61,71 +61,8 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
     })
   })
 
-  // await createPostPages(props)
   createPostListPages(createPage, locales)
-  // await createTechPages(props)
-  // await createHomePages(props)
 }
-
-/**
- * Create homepage for each locale
- */
-// const createHomePages = async ({ graphql, actions }) => {
-//   const { createPage } = actions
-//   const results = await graphql(localeQueryString)
-
-//   if (results.errors) {
-//     return
-//   }
-
-//   const { locales, defaultLocale } = results.data.site.siteMetadata
-
-//   locales.forEach(locale => {
-//     createPage({
-//       path: `/${locale}/`,
-//       component: path.resolve(`./src/templates/home-page.js`),
-//       context: {
-//         locale,
-//       },
-//     })
-//   })
-
-//   // Create index page
-//   createPage({
-//     path: `/`,
-//     component: path.resolve(`./src/templates/home-page.js`),
-//     context: {
-//       locale: defaultLocale,
-//     },
-//   })
-// }
-
-// const createPostPages = async ({ graphql, actions }) => {
-//   const { createPage } = actions
-//   const posts = await graphql(`
-//     query {
-//       allPost {
-//         edges {
-//           node {
-//             slug
-//             type
-//           }
-//         }
-//       }
-//     }
-//   `)
-
-//   posts.data.allPost.edges.forEach(({ node }) => {
-//     console.log(`node: `, node)
-//     createPage({
-//       path: node.slug,
-//       component: path.resolve(`./src/templates/${node.type}-post.js`),
-//       context: {
-//         slug: node.slug,
-//       },
-//     })
-//   })
-// }
 
 const createPostListPages = (createPage, locales) => {
   const typesSlugsMap = {
@@ -150,33 +87,3 @@ const createPostListPages = (createPage, locales) => {
     })
   })
 }
-
-// const createTechPages = async ({ graphql, actions }) => {
-//   const { createPage } = actions
-//   const results = await graphql(`
-//     query {
-//       allTechListYaml {
-//         edges {
-//           node {
-//             title
-//             slug
-//             summary
-//             type
-//             logo
-//           }
-//         }
-//       }
-//     }
-//   `)
-
-//   results.data.allTechListYaml.edges.forEach(({ node }) => {
-//     createPage({
-//       path: `/techs/${node.slug}`,
-//       component: path.resolve(`./src/templates/tech-page.js`),
-//       context: {
-//         slug: node.slug,
-//         title: node.title,
-//       },
-//     })
-//   })
-// }

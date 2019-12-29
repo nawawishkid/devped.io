@@ -1,8 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PostItem from "../components/post-item"
-import { withLocaleProvider } from "../contexts/locale"
-import Layout from "../components/layout"
 import { translate } from "../utils/i18n"
 
 const PostList = ({ data, pageContext }) => {
@@ -10,7 +8,7 @@ const PostList = ({ data, pageContext }) => {
   const { postType, locale } = pageContext
 
   return (
-    <Layout>
+    <>
       <h1>
         {translate(`post-list`, `all ${postType}`, locale, `en`)} (
         {posts.length})
@@ -18,11 +16,11 @@ const PostList = ({ data, pageContext }) => {
       {posts.map(({ node }) => (
         <PostItem {...node} key={node.id} />
       ))}
-    </Layout>
+    </>
   )
 }
 
-export default withLocaleProvider(PostList)
+export default PostList
 
 export const query = graphql`
   query($postType: String!) {

@@ -1,9 +1,7 @@
 import React from "react"
-import Layout from "../components/layout"
-import { withLocaleProvider } from "../contexts/locale"
 
 const IndexPage = () => {
-  return <Layout>Homepage!!</Layout>
+  return `Homepage!!`
 }
 
-export default withLocaleProvider(IndexPage)
+export default IndexPage

@@ -1,7 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
 import Link from "../components/link"
-import { withLocaleProvider } from "../contexts/locale"
 
 const RequirementPost = ({ data }) => {
   const { post, relatedPosts } = data
@@ -33,7 +32,7 @@ const RequirementPost = ({ data }) => {
   )
 }
 
-export default withLocaleProvider(RequirementPost)
+export default RequirementPost
 
 export const query = graphql`
   query($slug: String!) {
