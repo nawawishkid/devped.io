@@ -1,8 +1,9 @@
-const React = require(`react`)
-const { LocaleProvider } = require(`./src/contexts/locale`)
-const Layout = require(`./src/components/layout`)
+import React from "react"
+import { LocaleProvider } from "./src/contexts/locale"
+import Layout from "./src/components/layout"
 
-exports.wrapPageElement = ({ element, props }) => {
+export const wrapPageElement = ({ element, props }) => {
+  console.log(`SSR: wrapPageElement: `, props)
   const { pageContext } = props
 
   return (
