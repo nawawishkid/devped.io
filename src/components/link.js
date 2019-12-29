@@ -4,8 +4,11 @@ import { useLocale } from "../contexts/locale"
 
 const Link = ({ to, ...props }) => {
   const locale = useLocale()
+  const newUrl = `/` + locale + to
+  console.log(`locale: `, locale)
+  console.log(`newUrl: `, newUrl)
 
-  return <GLink to={`/` + locale + to} {...props} />
+  return <GLink to={newUrl} {...props} />
 }
 
 export default Link

@@ -1,9 +1,11 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
+import Link from "../components/link"
+import { withLocaleProvider } from "../contexts/locale"
 
 const ChapterPost = ({ data }) => {
   const { post } = data
-  console.log(`post: `, post);
+  console.log(`post: `, post)
 
   return (
     <div>
@@ -28,7 +30,7 @@ const SiblingChapter = ({ title, slug }) => {
   )
 }
 
-export default ChapterPost
+export default withLocaleProvider(ChapterPost)
 
 export const query = graphql`
   query($slug: String!) {

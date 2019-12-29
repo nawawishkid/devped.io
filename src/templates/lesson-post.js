@@ -1,5 +1,7 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
+import Link from "../components/link"
+import { withLocaleProvider } from "../contexts/locale"
 
 const LessonPost = ({ data }) => {
   const { post } = data
@@ -31,7 +33,7 @@ const SiblingLesson = ({ title, slug, type = `next` }) => {
   )
 }
 
-export default LessonPost
+export default withLocaleProvider(LessonPost)
 
 export const query = graphql`
   query($slug: String!) {
