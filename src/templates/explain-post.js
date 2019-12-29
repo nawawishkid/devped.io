@@ -16,8 +16,18 @@ const ExplainPost = ({ data }) => {
 export default ExplainPost
 
 export const query = graphql`
-  query($slug: String!) {
-    post(slug: { eq: $slug }, type: { eq: "explain" }) {
+  query($slug: String!, $locale: String!, $postType: String!) {
+    localizedPost: post(
+      slug: { eq: $slug }
+      type: { eq: $postType }
+      locale: { eq: $locale }
+    ) {
+      html
+      title
+      updatedAt
+      locale
+    }
+    defaultPost: post(slug: { eq: $slug }, type: { eq: $postType }) {
       html
       title
       updatedAt

@@ -35,8 +35,32 @@ const SiblingLesson = ({ title, slug, type = `next` }) => {
 export default LessonPost
 
 export const query = graphql`
-  query($slug: String!) {
-    post(slug: { eq: $slug }, type: { eq: "lesson" }) {
+  query($slug: String!, $locale: String!, $postType: String!) {
+    localizedPost: post(
+      slug: { eq: $slug }
+      type: { eq: $postType }
+      locale: { eq: $locale }
+    ) {
+      html
+      title
+      updatedAt
+      locale
+      tree {
+        parent {
+          title
+          slug
+        }
+        next {
+          title
+          slug
+        }
+        prev {
+          title
+          slug
+        }
+      }
+    }
+    defaultPost: post(slug: { eq: $slug }, type: { eq: $postType }) {
       html
       title
       updatedAt

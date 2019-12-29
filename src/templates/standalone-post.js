@@ -16,8 +16,18 @@ const StandalonePost = ({ data }) => {
 export default StandalonePost
 
 export const query = graphql`
-  query($slug: String!) {
-    post(slug: { eq: $slug }, type: { eq: "standalone" }) {
+  query($slug: String!, $locale: String!, $postType: String!) {
+    localizedPost: post(
+      slug: { eq: $slug }
+      type: { eq: $postType }
+      locale: { eq: $locale }
+    ) {
+      html
+      title
+      updatedAt
+      locale
+    }
+    defaultPost: post(slug: { eq: $slug }, type: { eq: $postType }) {
       html
       title
       updatedAt

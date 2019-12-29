@@ -31,8 +31,30 @@ const SeriesPost = ({ data }) => {
 export default SeriesPost
 
 export const query = graphql`
-  query($slug: String!) {
-    post(slug: { eq: $slug }, type: { eq: "series" }) {
+  query($slug: String!, $locale: String!, $postType: String!) {
+    localizedPost: post(
+      slug: { eq: $slug }
+      type: { eq: $postType }
+      locale: { eq: $locale }
+    ) {
+      html
+      title
+      updatedAt
+      locale
+      tree {
+        children {
+          id
+          title
+          slug
+        }
+        # parent is a requirement
+        parent {
+          title
+          slug
+        }
+      }
+    }
+    defaultPost: post(slug: { eq: $slug }, type: { eq: $postType }) {
       html
       title
       updatedAt

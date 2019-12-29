@@ -31,8 +31,28 @@ const SiblingChapter = ({ title, slug }) => {
 export default ChapterPost
 
 export const query = graphql`
-  query($slug: String!) {
-    post(slug: { eq: $slug }, type: { eq: "chapter" }) {
+  query($slug: String!, $locale: String!, $postType: String!) {
+    localizedPost: post(
+      slug: { eq: $slug }
+      type: { eq: $postType }
+      locale: { eq: $locale }
+    ) {
+      html
+      title
+      updatedAt
+      locale
+      tree {
+        next {
+          title
+          slug
+        }
+        prev {
+          title
+          slug
+        }
+      }
+    }
+    defaultPost: post(slug: { eq: $slug }, type: { eq: $postType }) {
       html
       title
       updatedAt

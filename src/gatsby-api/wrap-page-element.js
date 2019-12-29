@@ -8,6 +8,8 @@ export default ({ element: initialElement, props }) => {
   let element
 
   if (pageContext.pageType === `post`) {
+    console.log(`props: `, props)
+    props.data.post = props.data.localizedPost || props.data.defaultPost
     element = <PostLayout {...props}>{initialElement}</PostLayout>
   } else {
     element = initialElement

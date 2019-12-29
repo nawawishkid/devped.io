@@ -60,6 +60,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           slug: node.slug,
           locale: locale,
           pageType: `post`,
+          postType: node.type,
         },
       })
     })
