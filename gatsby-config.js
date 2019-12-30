@@ -2,7 +2,7 @@ module.exports = {
   siteMetadata: {
     title: `Pandas eating lots`,
     locales: [`en`, `th`],
-    defaultLocale: `en`
+    defaultLocale: `en`,
   },
   plugins: [
     `gatsby-plugin-emotion`,
@@ -18,6 +18,13 @@ module.exports = {
       options: {
         name: `data`,
         path: `${__dirname}/content/data`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: `locales`,
+        path: `${__dirname}/content/locales`,
       },
     },
     {
