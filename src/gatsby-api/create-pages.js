@@ -18,6 +18,14 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           }
         }
       }
+      allNavsYaml {
+        edges {
+          node {
+            key
+            url
+          }
+        }
+      }
     }
   `)
 
@@ -25,7 +33,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
     return
   }
 
-  const { allPost, site } = results.data
+  const { allPost, site, allNavsYaml } = results.data
   const { locales, defaultLocale } = site.siteMetadata
 
   // Create homepage for each locale
@@ -35,6 +43,8 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
       component: path.resolve(`./src/templates/home-page.js`),
       context: {
         locale,
+        defaultLocale,
+        pageType: `page`,
       },
     })
   })
@@ -45,6 +55,8 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
     component: path.resolve(`./src/templates/home-page.js`),
     context: {
       locale: defaultLocale,
+      defaultLocale,
+      pageType: `page`,
     },
   })
 
@@ -55,38 +67,28 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
       console.log(`url: `, url)
       createPage({
         path: url,
-        component: path.resolve(`./src/templates/${node.type}-post.js`),
+        component: path.resolve(`./src/templates/single-post.js`),
         context: {
           slug: node.slug,
           locale: locale,
           pageType: `post`,
           postType: node.type,
+          defaultLocale,
         },
       })
     })
   })
 
-  createPostListPages(createPage, locales)
-}
-
-const createPostListPages = (createPage, locales) => {
-  const typesSlugsMap = {
-    explain: `/explains/`,
-    standalone: `/tutorials/standalones/`,
-    series: `/tutorials/series/`,
-    class: `/classes/`,
-    requirement: `/requirements/`,
-    tech: `/techs/`,
-  }
-
-  Object.entries(typesSlugsMap).forEach(([type, slug]) => {
+  allNavsYaml.edges.forEach(({ node }) => {
     locales.forEach(locale => {
       createPage({
-        path: `/` + locale + slug,
+        path: `/` + locale + node.url,
         component: path.resolve(`./src/templates/post-list.js`),
         context: {
-          postType: type,
+          postType: node.key,
           locale,
+          defaultLocale,
+          pageType: `page`,
         },
       })
     })
