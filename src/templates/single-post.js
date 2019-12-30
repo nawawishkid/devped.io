@@ -23,13 +23,18 @@ export const query = graphql`
     $postType: String!
   ) {
     localizedPost: post(
+      status: { eq: "published" }
       slug: { eq: $slug }
       type: { eq: $postType }
       locale: { eq: $locale }
     ) {
       ...allPostFields
     }
-    defaultPost: post(slug: { eq: $slug }, type: { eq: $postType }) {
+    defaultPost: post(
+      status: { eq: "published" }
+      slug: { eq: $slug }
+      type: { eq: $postType }
+    ) {
       ...allPostFields
     }
     childrenPosts: allPost(filter: { frontmatter: { parent: { eq: $slug } } }) {

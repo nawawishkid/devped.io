@@ -24,7 +24,7 @@ export default PostList
 
 export const query = graphql`
   query($postType: String!, $locale: String!, $defaultLocale: String!) {
-    allPost(filter: { type: { eq: $postType } }) {
+    allPost(filter: { status: { eq: "published" }, type: { eq: $postType } }) {
       edges {
         node {
           ...basicPostFields

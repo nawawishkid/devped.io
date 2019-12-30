@@ -9,7 +9,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           defaultLocale
         }
       }
-      allPost {
+      allPost(filter: { status: { eq: "published" } }) {
         edges {
           node {
             slug

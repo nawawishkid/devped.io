@@ -18,6 +18,9 @@ export const BasicPost = props => {
 export const ClassPost = props => {
   const { post } = props.data
   const { translate } = useLocale()
+  const lessons = post.tree.children.filter(
+    lesson => lesson.status === `published`
+  )
 
   return (
     <div>
@@ -25,16 +28,20 @@ export const ClassPost = props => {
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
       <div>
-        <h3>{translate(`lessons`, `class-post`, `page`)}</h3>
-        <ul>
-          {post.tree.children.map(lesson => (
-            <li key={lesson.id}>
-              <Link to={lesson.slug}>
-                <h4>{lesson.title}</h4>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <h3>
+          {translate(`lessons`, `class-post`, `page`)} ({lessons.length})
+        </h3>
+        {lessons.length ? (
+          <ul>
+            {lessons.map(lesson => (
+              <li key={lesson.id}>
+                <Link to={lesson.slug}>
+                  <h4>{lesson.title}</h4>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
@@ -82,8 +89,12 @@ export const LessonPost = props => {
       <p>{post.updatedAt}</p>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <div>
-        {next ? <SiblingLesson node={next} /> : null}
-        {prev ? <SiblingLesson node={prev} type="prev" /> : null}
+        {next && next.status === `published` ? (
+          <SiblingLesson node={next} />
+        ) : null}
+        {prev && prev.status === `published` ? (
+          <SiblingLesson node={prev} type="prev" />
+        ) : null}
       </div>
     </div>
   )
