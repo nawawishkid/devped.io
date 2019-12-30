@@ -1,7 +1,6 @@
 module.exports = ({ createResolvers }) => {
   const resolver = {
     ...createPostResolver(),
-    ...createTechListResolver(),
   }
 
   createResolvers(resolver)
@@ -10,15 +9,11 @@ module.exports = ({ createResolvers }) => {
 const createPostResolver = () => ({
   Post: {
     stack: {
+      /**
+       * @TODO: Complete Post.stack resolver function
+       */
       async resolve(source, args, context) {
-        const techs = await context.nodeModel.runQuery({
-          query: { filter: { title: { in: source.frontmatter.stack } } },
-          type: `Tech`,
-        })
-
-        console.log(`techs: `, techs)
-
-        return techs
+        return null
       },
     },
     html: {
@@ -74,20 +69,6 @@ const createPostResolver = () => ({
         }
 
         return tree
-      },
-    },
-  },
-})
-
-const createTechListResolver = () => ({
-  TechListYaml: {
-    slug: {
-      resolve(source) {
-        const slug =
-          source.slug || source.title.toLowerCase().replace(/[ \/&#,=]/g, `-`)
-        console.log(`slug: `, slug)
-
-        return slug
       },
     },
   },

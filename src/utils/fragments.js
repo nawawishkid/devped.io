@@ -47,6 +47,7 @@ export const basicPostFields = graphql`
     type
     updatedAt
     locale
+    status
   }
 `
 
