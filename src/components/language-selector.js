@@ -7,7 +7,7 @@ import { useLocale } from "../contexts/locale"
  */
 const LanguageSelector = () => {
   const [pathname, setPathname] = React.useState(null)
-  const locale = useLocale()
+  const { locale } = useLocale()
   const data = useStaticQuery(graphql`
     query {
       site {

@@ -2,7 +2,7 @@ import React from "react"
 import { useLocale } from "../contexts/locale"
 
 const PostLocaleWarning = ({ locale: postLocale }) => {
-  const locale = useLocale()
+  const { locale } = useLocale()
 
   return locale !== postLocale ? (
     <p style={{ background: `red`, color: `white` }}>
