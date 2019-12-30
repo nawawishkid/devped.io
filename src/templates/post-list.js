@@ -1,17 +1,17 @@
 import React from "react"
 import { graphql } from "gatsby"
 import PostItem from "../components/post-item"
-import { translate } from "../utils/i18n"
+import { useLocale } from "../contexts/locale"
 
 const PostList = ({ data, pageContext }) => {
   const posts = data.allPost.edges
-  const { postType, locale } = pageContext
+  const { postType } = pageContext
+  const { translate } = useLocale()
 
   return (
     <>
       <h1>
-        {translate(`post-list`, `all ${postType}`, locale, `en`)} (
-        {posts.length})
+        {translate(`all_${postType}`, `post-list`, `page`)} ({posts.length})
       </h1>
       {posts.map(({ node }) => (
         <PostItem {...node} key={node.id} />
@@ -23,17 +23,31 @@ const PostList = ({ data, pageContext }) => {
 export default PostList
 
 export const query = graphql`
-  query($postType: String!) {
+  query($postType: String!, $locale: String!, $defaultLocale: String!) {
     allPost(filter: { type: { eq: $postType } }) {
       edges {
         node {
-          id
-          title
-          slug
-          type
-          updatedAt
+          ...basicPostFields
         }
       }
+    }
+    expectedTranslation: allLocale(
+      filter: {
+        locale: { eq: $locale }
+        type: { in: ["page", "component"] }
+        name: { in: ["post-list", "post-item", "nav"] }
+      }
+    ) {
+      ...localeConnectionFields
+    }
+    defaultTranslation: allLocale(
+      filter: {
+        locale: { eq: $defaultLocale }
+        type: { in: ["page", "component"] }
+        name: { in: ["post-list", "post-item", "nav"] }
+      }
+    ) {
+      ...localeConnectionFields
     }
   }
 `
