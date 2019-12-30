@@ -1,35 +1,17 @@
 - key: class
-  label: Classes
-  locale: en
   url: /classes/
 
 - key: series
-  label: Series
-  locale: en
-  url: /tutorials/series/
-
-- key: series
-  label: ซีรีย์ส์
-  locale: th
   url: /tutorials/series/
 
 - key: explain
-  label: Explains
-  locale: en
-  url: /tutorials/explains/
-
-- key: explain
-  label: อธิบาย
-  locale: th
-  url: /tutorials/explains/
+  url: /explains/
 
 - key: tech
-  label: Technologies
-  locale: en
   url: /techs/
 
-- key: tech
-  label: เทคโนโลยี
-  locale: th
-  url: /techs/
+- key: standalone
+  url: /tutorials/standalones/
 
+- key: requirement
+  url: /requirements/
