@@ -1,5 +1,3 @@
-const { createFilePath } = require(`gatsby-source-filesystem`)
-
 const pluralToSingular = {
   explains: `explain`,
   classes: `class`,
@@ -45,7 +43,6 @@ const createPostNode = ({
 
   content.slug = frontmatter.slug || makeSlug(content, fileNode)
 
-  // console.log(`content: `, content)
   const postNode = {
     id: createNodeId(`${content.slug}-${content.locale}`),
     children: [],
@@ -66,8 +63,6 @@ const makeSlug = (content, fileNode) => {
 
   name = name === `index` ? `` : name + `/`
   const slug = `/${fileNode.relativeDirectory}/${name}`
-
-  console.log(`slug: `, slug)
 
   switch (content.type) {
     case `series`:
