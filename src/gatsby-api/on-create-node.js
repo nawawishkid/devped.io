@@ -1,3 +1,6 @@
+const fs = require(`fs`)
+const yaml = require(`js-yaml`)
+
 const pluralToSingular = {
   explains: `explain`,
   classes: `class`,
@@ -10,8 +13,18 @@ const pluralToSingular = {
 module.exports = props => {
   const { node } = props
 
+  // console.log(`node: `, node)
   if (node.internal.type === `MarkdownRemark`) {
     createPostNode(props)
+  }
+
+  if (
+    node.internal.type === `File` &&
+    node.internal.mediaType === `text/yaml` &&
+    node.sourceInstanceName === `locales`
+  ) {
+    console.log(`locale-node: `, node)
+    createLocaleNode(props)
   }
 }
 
@@ -73,4 +86,46 @@ const makeSlug = (content, fileNode) => {
     default:
       return slug
   }
+}
+
+const createLocaleNode = ({
+  node: fileNode,
+  actions,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const { createNode, createParentChildLink } = actions
+  const [localeName, localeType, localeFilename] = fileNode.relativePath.split(
+    `/`
+  )
+  const name = localeFilename
+    .split(`.`)
+    .slice(0, -1)
+    .join(`.`)
+  const doc = yaml.safeLoad(fs.readFileSync(fileNode.absolutePath, `utf8`))
+  const content = {
+    locale: localeName,
+    type: localeType,
+    name,
+    map: Object.entries(doc).reduce(
+      (obj, [key, value]) => ({
+        ...obj,
+        [[localeType, name, key].join(`___`)]: value,
+      }),
+      {}
+    ),
+  }
+  const localeNode = {
+    ...content,
+    id: createNodeId(fileNode.relativePath),
+    parent: fileNode.id,
+    children: [],
+    internal: {
+      type: `Locale`,
+      contentDigest: createContentDigest(content),
+    },
+  }
+
+  createNode(localeNode)
+  createParentChildLink({ parent: fileNode, child: localeNode })
 }
