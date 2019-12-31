@@ -6,9 +6,25 @@ import SEO from "../components/seo"
 
 const PostList = ({ data, pageContext, path }) => {
   const posts = data.allPost.edges
-  const { postType } = pageContext
+  const { postType, locale } = pageContext
   const { translate } = useLocale()
   const heading = translate(`all_${postType}`, `post-list`, `page`)
+  const localizedPosts = posts.reduce((arr, edge) => {
+    const { node: post } = edge
+    console.log(`post: `, post)
+    let localizedPost
+
+    if (post.locale !== locale) {
+      localizedPost = post.translations.find(p => p.locale === locale)
+    } else {
+      localizedPost = post
+    }
+
+    arr.push({ node: localizedPost })
+
+    return arr
+  }, [])
+  console.log(`locPosts: `, localizedPosts)
 
   return (
     <>
@@ -16,7 +32,7 @@ const PostList = ({ data, pageContext, path }) => {
       <h1>
         {heading} ({posts.length})
       </h1>
-      {posts.map(({ node }) => (
+      {localizedPosts.map(({ node }) => (
         <PostItem {...node} key={node.id} />
       ))}
     </>
@@ -27,10 +43,17 @@ export default PostList
 
 export const query = graphql`
   query($postType: String!, $locale: String!, $defaultLocale: String!) {
-    allPost(filter: { status: { eq: "published" }, type: { eq: $postType } }) {
+    allPost(
+      filter: {
+        status: { eq: "published" }
+        type: { eq: $postType }
+        original: { eq: true }
+      }
+    ) {
       edges {
         node {
           ...basicPostFields
+          ...postTranslationsFields
         }
       }
     }
