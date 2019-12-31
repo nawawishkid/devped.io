@@ -15,11 +15,18 @@ const SinglePost = props => {
 export default SinglePost
 
 export const query = graphql`
+  fragment validTranslations on Post {
+    validTranslations: translations(locales: $supportedLocales) {
+      ...basicPostFields
+    }
+  }
+
   query(
     $slug: String!
     $locale: String!
     $defaultLocale: String!
     $postType: String!
+    $supportedLocales: [String!]!
   ) {
     localizedPost: post(
       status: { eq: "published" }
@@ -28,20 +35,16 @@ export const query = graphql`
       locale: { eq: $locale }
     ) {
       ...allPostFields
+      ...validTranslations
     }
     defaultPost: post(
       status: { eq: "published" }
       slug: { eq: $slug }
       type: { eq: $postType }
+      locale: { eq: $defaultLocale }
     ) {
       ...allPostFields
-    }
-    childrenPosts: allPost(filter: { frontmatter: { parent: { eq: $slug } } }) {
-      edges {
-        node {
-          ...basicPostFields
-        }
-      }
+      ...validTranslations
     }
     expectedTranslation: allLocale(
       filter: {
