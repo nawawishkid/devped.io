@@ -4,7 +4,7 @@ title: "Basic HTML & CSS"
 date: "2019-12-27"
 type: "class"
 stack: ["HTML", "CSS"]
-status: "draft"
+status: "published"
 locale: en
 children:
   - "/classes/basic-html-css/lessons/1-what-is-html/"

@@ -9,6 +9,8 @@ status: published
 parent: "/classes/basic-html-css/"
 next: "/classes/basic-html-css/lessons/2-what-is-css/"
 locale: en
+original: true
 ---
 
+this is en locale
 Lorem ipsum dolor
