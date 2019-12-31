@@ -48,19 +48,24 @@ export const basicPostFields = graphql`
     updatedAt
     locale
     status
+    original
+  }
+
+  fragment postTranslationsFields on Post {
+    translations {
+      ...basicPostFields
+    }
   }
 `
 
 export const allPostFields = graphql`
   fragment allPostFields on Post {
+    ...basicPostFields
     createdAt
     frontmatter {
       ...allPostFrontmatterFields
     }
     html
-    id
-    locale
-    slug
     stack {
       logo
       slug
@@ -69,28 +74,29 @@ export const allPostFields = graphql`
       type
       websites
     }
-    status
-    title
     tree {
       ...allPostTreeFields
     }
+    ...postTranslationsFields
     # treeRef
-    type
-    updatedAt
   }
 
   fragment allPostTreeFields on PostTree {
     children {
       ...basicPostFields
+      ...postTranslationsFields
     }
     next {
       ...basicPostFields
+      ...postTranslationsFields
     }
     parent {
       ...basicPostFields
+      ...postTranslationsFields
     }
     prev {
       ...basicPostFields
+      ...postTranslationsFields
     }
   }
 
