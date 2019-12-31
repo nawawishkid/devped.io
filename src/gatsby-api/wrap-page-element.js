@@ -10,7 +10,7 @@ export default ({ element: initialElement, props }) => {
   }
 
   const { data, pageContext } = props
-  const { pageType, locale, defaultLocale } = pageContext
+  const { pageType, locale, defaultLocale, supportedLocales } = pageContext
   let translations = {},
     element
 
@@ -41,6 +41,7 @@ export default ({ element: initialElement, props }) => {
         locale={locale}
         defaultLocale={defaultLocale}
         translations={translations}
+        supportedLocales={supportedLocales}
       >
         <Layout>{element}</Layout>
       </LocaleProvider>
