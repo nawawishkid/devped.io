@@ -15,7 +15,7 @@ const PostList = ({ data, pageContext, path }) => {
     let localizedPost
 
     if (post.locale !== locale) {
-      localizedPost = post.translations.find(p => p.locale === locale)
+      localizedPost = post.translations.find(p => p.locale === locale) || post
     } else {
       localizedPost = post
     }
