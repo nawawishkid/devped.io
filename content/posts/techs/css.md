@@ -1,6 +1,8 @@
 ---
 title: CSS
 type: tech
+status: published
+original: true
 techTypes:
   - language
 locale: en
