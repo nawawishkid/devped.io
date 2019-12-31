@@ -2,16 +2,19 @@ import React from "react"
 import { graphql } from "gatsby"
 import PostItem from "../components/post-item"
 import { useLocale } from "../contexts/locale"
+import SEO from "../components/seo"
 
-const PostList = ({ data, pageContext }) => {
+const PostList = ({ data, pageContext, path }) => {
   const posts = data.allPost.edges
   const { postType } = pageContext
   const { translate } = useLocale()
+  const heading = translate(`all_${postType}`, `post-list`, `page`)
 
   return (
     <>
+      <SEO title={heading} pathname={path} />
       <h1>
-        {translate(`all_${postType}`, `post-list`, `page`)} ({posts.length})
+        {heading} ({posts.length})
       </h1>
       {posts.map(({ node }) => (
         <PostItem {...node} key={node.id} />

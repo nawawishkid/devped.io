@@ -4,11 +4,10 @@ import * as postComponents from "../components/posts"
 
 const SinglePost = props => {
   const { pageContext } = props
+  const { postType } = pageContext
   const PostComponent =
-    postComponents[
-      `${pageContext.postType[0].toUpperCase() +
-        pageContext.postType.slice(1)}Post`
-    ] || postComponents.BasicPost
+    postComponents[`${postType[0].toUpperCase() + postType.slice(1)}Post`] ||
+    postComponents.BasicPost
 
   return <PostComponent {...props} />
 }

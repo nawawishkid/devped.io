@@ -1,8 +1,18 @@
 module.exports = {
   siteMetadata: {
-    title: `Pandas eating lots`,
+    title: `DevPed.io`,
+    titleTemplate: `%s | DevPed.io`,
+    description: `Project`,
     locales: [`en`, `th`],
     defaultLocale: `en`,
+    image: ``,
+    url: `https://devped.io`,
+    socials: {
+      twitter: `devped.io`,
+      facebook: `devped.io`,
+      instagram: `devped.io`,
+      github: `devped.io`,
+    },
   },
   plugins: [
     `gatsby-plugin-emotion`,
@@ -53,5 +63,6 @@ module.exports = {
       },
     },
     `gatsby-transformer-yaml`,
+    `gatsby-plugin-react-helmet`,
   ],
 }

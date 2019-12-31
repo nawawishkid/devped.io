@@ -36,13 +36,15 @@ export default ({ element: initialElement, props }) => {
   }
 
   return (
-    <LocaleProvider
-      locale={locale}
-      defaultLocale={defaultLocale}
-      translations={translations}
-    >
-      <Layout>{element}</Layout>
-    </LocaleProvider>
+    <>
+      <LocaleProvider
+        locale={locale}
+        defaultLocale={defaultLocale}
+        translations={translations}
+      >
+        <Layout>{element}</Layout>
+      </LocaleProvider>
+    </>
   )
 }
 
