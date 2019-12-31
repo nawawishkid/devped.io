@@ -17,23 +17,40 @@ export const BasicPost = props => {
 }
 export const ClassPost = props => {
   const { post } = props.data
-  const { translate } = useLocale()
-  const lessons = post.tree.children.filter(
-    lesson => lesson.status === `published`
-  )
+  const { translate, locale } = useLocale()
+  const localizedLessons = post.tree.children.reduce((arr, lesson) => {
+    if (lesson.status !== `published`) return arr
+
+    let localizedLesson
+
+    if (lesson.locale !== locale && lesson.translations.length) {
+      localizedLesson = lesson.translations.find(l => l.locale === locale)
+    }
+
+    arr.push(localizedLesson || lesson)
+
+    return arr
+  }, [])
+
+  console.log(`lessons: `, post.tree.children)
+  console.log(`locLessons: `, localizedLessons)
 
   return (
     <div>
       This is class post
       <h1>{post.title}</h1>
+      {post.validTranslations.length ? (
+        <PostTranslationList translations={post.validTranslations} />
+      ) : null}
       <p>{post.updatedAt}</p>
       <div>
         <h3>
-          {translate(`lessons`, `class-post`, `page`)} ({lessons.length})
+          {translate(`lessons`, `class-post`, `page`)} (
+          {localizedLessons.length})
         </h3>
-        {lessons.length ? (
+        {localizedLessons.length ? (
           <ul>
-            {lessons.map(lesson => (
+            {localizedLessons.map(lesson => (
               <li key={lesson.id}>
                 <Link to={lesson.slug}>
                   <h4>{lesson.title}</h4>
@@ -74,8 +91,9 @@ export const SeriesPost = props => {
 }
 export const LessonPost = props => {
   const { post } = props.data
-  const { parent, next, prev } = post.tree
-  const { translate } = useLocale()
+  const { tree, validTranslations } = post
+  const { parent, next, prev } = tree
+  const { translate, locale } = useLocale()
 
   return (
     <div>
@@ -86,14 +104,15 @@ export const LessonPost = props => {
         </small>
       </Link>
       <h1>{post.title}</h1>
+      {validTranslations.length ? (
+        <PostTranslationList translations={validTranslations} />
+      ) : null}
       <p>{post.updatedAt}</p>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <div>
-        {next && next.status === `published` ? (
-          <SiblingLesson node={next} />
-        ) : null}
-        {prev && prev.status === `published` ? (
-          <SiblingLesson node={prev} type="prev" />
+        {next ? <SiblingLesson node={localizePost(next, locale)} /> : null}
+        {prev ? (
+          <SiblingLesson node={localizePost(prev, locale)} type="prev" />
         ) : null}
       </div>
     </div>
@@ -101,7 +120,10 @@ export const LessonPost = props => {
 }
 export const ChapterPost = props => `This is chapter post`
 export const RequirementPost = props => {
-  const { post, childrenPosts } = props.data
+  const {
+    post,
+    tree: { children },
+  } = props.data
   const { translate } = useLocale()
 
   return (
@@ -121,7 +143,7 @@ export const RequirementPost = props => {
       <div>
         <h3>{translate(`implemented_by`, `requirement-post`, `page`)}</h3>
         <ul>
-          {childrenPosts.edges.map(({ node }) => (
+          {children.edges.map(({ node }) => (
             <PostItem {...node} key={node.id} />
           ))}
         </ul>
@@ -143,15 +165,42 @@ export const StandalonePost = props => {
   )
 }
 
-const SiblingLesson = ({ node: { title, slug }, type = `next` }) => {
+const SiblingLesson = ({ node: { title, slug, status }, type = `next` }) => {
   const { translate } = useLocale()
   const key = type === `next` ? type : `previous`
+  const heading = (
+    <>
+      {translate(key, `lesson-post`, `page`)} <h4>{title}</h4>
+    </>
+  )
 
   return (
     <div>
-      <Link to={slug}>
-        {translate(key, `lesson-post`, `page`)} <h4>{title}</h4>
-      </Link>
+      {status === `soon` ? (
+        <>
+          {heading}
+          <p>Soon</p>
+        </>
+      ) : (
+        <Link to={slug}>{heading}</Link>
+      )}
     </div>
   )
+}
+
+const PostTranslationList = ({ translations }) => (
+  <div>
+    <h4>Translations:</h4>
+    <ul>
+      {translations.map(tpost => (
+        <Link key={tpost.id} to={tpost.slug} locale={tpost.locale}>
+          <li>{tpost.locale}</li>
+        </Link>
+      ))}
+    </ul>
+  </div>
+)
+
+const localizePost = (post, locale) => {
+  return post.translations.find(pt => pt.locale === locale) || post
 }
