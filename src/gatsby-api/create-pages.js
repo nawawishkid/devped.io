@@ -45,6 +45,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
         locale,
         defaultLocale,
         pageType: `page`,
+        supportedLocales: locales,
       },
     })
   })
@@ -57,6 +58,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
       locale: defaultLocale,
       defaultLocale,
       pageType: `page`,
+      supportedLocales: locales,
     },
   })
 
@@ -74,6 +76,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           pageType: `post`,
           postType: node.type,
           defaultLocale,
+          supportedLocales: locales,
         },
       })
     })
@@ -89,6 +92,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           locale,
           defaultLocale,
           pageType: `page`,
+          supportedLocales: locales,
         },
       })
     })

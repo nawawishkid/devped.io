@@ -6,6 +6,7 @@ export const LocaleProvider = ({
   children,
   locale,
   defaultLocale,
+  supportedLocales,
   translations,
 }) => {
   const translate = (key, name, type, handleError = null) => {
@@ -55,7 +56,7 @@ export const LocaleProvider = ({
   }
 
   return (
-    <LocaleContext.Provider value={{ locale, translate }}>
+    <LocaleContext.Provider value={{ locale, translate, supportedLocales }}>
       {children}
     </LocaleContext.Provider>
   )
