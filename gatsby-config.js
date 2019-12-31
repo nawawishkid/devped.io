@@ -15,6 +15,12 @@ module.exports = {
     },
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: `UA-118059742-3`,
+      },
+    },
     `gatsby-plugin-emotion`,
     {
       resolve: `gatsby-source-filesystem`,
