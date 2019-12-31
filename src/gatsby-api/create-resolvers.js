@@ -1,6 +1,7 @@
 module.exports = ({ createResolvers }) => {
   const resolver = {
     ...createPostResolver(),
+    ...createPostTreeResolver(),
   }
 
   createResolvers(resolver)
@@ -8,12 +9,37 @@ module.exports = ({ createResolvers }) => {
 
 const createPostResolver = () => ({
   Post: {
+    translations: {
+      async resolve(source, args, context) {
+        console.log(`resolve translations args: `, args)
+        const localeFilter = { ne: source.locale }
+
+        if (Array.isArray(args.locales) && args.locales.length) {
+          localeFilter.in = args.locales
+        }
+
+        const translations = await context.nodeModel.runQuery({
+          query: {
+            filter: {
+              slug: { eq: source.slug },
+              locale: localeFilter,
+              status: { eq: args.status || `published` },
+            },
+          },
+          type: `Post`,
+        })
+
+        // console.log(`translationNodes: `, translations)
+
+        return translations || []
+      },
+    },
     stack: {
       /**
        * @TODO: Complete Post.stack resolver function
        */
       async resolve(source, args, context) {
-        return null
+        return []
       },
     },
     html: {
@@ -27,49 +53,105 @@ const createPostResolver = () => ({
       },
     },
     tree: {
-      async resolve(source, args, context, info) {
-        const tree = {}
+      resolve: source => source,
+    },
+  },
+})
+
+const createPostTreeResolver = () => ({
+  PostTree: {
+    children: {
+      async resolve(source, args, context) {
         const { treeRef } = source
-
-        if (treeRef.parent) {
-          const parents = await context.nodeModel.runQuery({
-            query: { filter: { slug: { eq: treeRef.parent } } },
-            type: `Post`,
-          })
-
-          tree.parent = Array.isArray(parents) ? parents[0] : null
-        }
+        let children
 
         if (Array.isArray(treeRef.children) && treeRef.children.length > 0) {
-          const children = await context.nodeModel.runQuery({
-            query: { filter: { slug: { in: treeRef.children } } },
+          children = await context.nodeModel.runQuery({
+            query: {
+              filter: {
+                slug: { in: treeRef.children },
+                status: { eq: args.status || `published` },
+                original: { eq: true },
+              },
+            },
             type: `Post`,
             firstOnly: false,
           })
-
-          tree.children = children
         }
 
-        if (treeRef.next) {
-          const nexts = await context.nodeModel.runQuery({
-            query: { filter: { slug: { eq: treeRef.next } } },
-            type: `Post`,
-          })
+        console.log(`children: `, children)
 
-          tree.next = Array.isArray(nexts) ? nexts[0] : null
+        if (children && args.locale) {
+          children = children.reduce((arr, child) => {
+            let localizedChild
+
+            if (child.locale !== args.locale && child.translations.length) {
+              localizedChild = child.translations.find(
+                l => l.locale === args.locale
+              )
+            }
+
+            arr.push(localizedChild || child)
+
+            return arr
+          }, [])
+
+          console.log(`locChildren: `, children)
         }
+
+        return children || []
+      },
+    },
+    parent: {
+      async resolve(source, args, context) {
+        const { treeRef } = source
+        let parent
+
+        if (treeRef.parent) {
+          parent = await getPostsBySlug(context)(treeRef.parent, true)
+        }
+
+        return parent || null
+      },
+    },
+    prev: {
+      async resolve(source, args, context) {
+        const { treeRef } = source
+        let prev
 
         if (treeRef.prev) {
-          const prevs = await context.nodeModel.runQuery({
-            query: { filter: { slug: { eq: treeRef.prev } } },
-            type: `Post`,
-          })
-
-          tree.prev = Array.isArray(prevs) ? prevs[0] : null
+          prev = await getPostsBySlug(context)(treeRef.prev, true)
         }
 
-        return tree
+        return prev || null
+      },
+    },
+    next: {
+      async resolve(source, args, context) {
+        const { treeRef } = source
+        let next
+
+        if (treeRef.next) {
+          next = await getPostsBySlug(context)(treeRef.next, true)
+        }
+
+        return next || null
       },
     },
   },
 })
+
+const getPostsBySlug = context => async (slug, single = false) => {
+  const posts = await context.nodeModel.runQuery({
+    query: {
+      filter: { slug: { eq: slug }, status: { in: [`published`, `soon`] } },
+    },
+    type: `Post`,
+  })
+
+  if (single) {
+    return Array.isArray(posts) ? posts[0] : null
+  }
+
+  return posts
+}
