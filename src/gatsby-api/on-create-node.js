@@ -43,7 +43,7 @@ const createPostNode = ({
   const fileNode = getNode(mdNode.parent)
   const content = {
     title: frontmatter.title,
-    status: frontmatter.status,
+    status: frontmatter.status || `published`,
     original: frontmatter.original === false ? false : true,
     type: frontmatter.type || pluralToSingular[fileNode.relativeDirectory],
     frontmatter,
