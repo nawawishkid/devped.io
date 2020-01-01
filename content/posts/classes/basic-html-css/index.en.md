@@ -4,7 +4,6 @@ title: "Basic HTML & CSS"
 date: "2019-12-27"
 type: "class"
 stack: ["HTML", "CSS"]
-status: "published"
 locale: en
 original: false
 children:

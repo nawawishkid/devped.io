@@ -1,7 +1,6 @@
 ---
 title: JavaScript
 type: tech
-status: published
 original: true
 techTypes:
   - language

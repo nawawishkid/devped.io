@@ -4,7 +4,6 @@ title: "HTML & CSS เบื้องต้น"
 date: "2019-12-27"
 type: "class"
 stack: ["HTML", "CSS"]
-status: "published"
 original: false
 children:
   - "/classes/basic-html-css/lessons/1-what-is-html/"
