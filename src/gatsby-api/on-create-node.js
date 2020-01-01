@@ -160,7 +160,7 @@ const createTechNode = ({
     slug: slug || detectedSlug,
   }
   const techNode = {
-    id: createNodeId(`tech-${postNode.frontmatter.slug}`),
+    id: createNodeId(`tech-${content.slug}`),
     children: [],
     parent: postNode.id,
     ...content,
