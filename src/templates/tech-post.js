@@ -4,14 +4,28 @@ import * as postComponents from "../components/posts"
 import PostItem from "../components/post-item"
 
 const TechPost = props => {
-  const { localizedPostsAboutTech } = props.data
+  const { localizedPostsAboutTech, originalPostsAboutTech } = props.data
   const PostComponent = postComponents.BasicPost
+  /**
+   * Merge localized posts with the original posts that don't have a matched translation of website's locale.
+   * Below algorithm is not performant, you can fix this if you want to.
+   */
+  const postsAboutTech = [
+    ...localizedPostsAboutTech.edges,
+    ...originalPostsAboutTech.edges,
+  ].reduce((list, { node: post }) => {
+    if (list.find(n => n.id === post.id || n.slug === post.slug)) {
+      return list
+    }
+
+    list.push(post)
+
+    return list
+  }, [])
 
   return (
     <PostComponent {...props}>
-      <PostsAboutThisTech
-        posts={localizedPostsAboutTech.edges.map(({ node }) => node)}
-      />
+      <PostsAboutThisTech posts={postsAboutTech} />
     </PostComponent>
   )
 }
@@ -55,7 +69,7 @@ export const query = graphql`
     $supportedLocales: [String!]!
     $techTitle: String!
   ) {
-    # @TODO: filter post by tech' slug instead
+    # // @TODO: filter post by tech' slug instead
     localizedPostsAboutTech: allPost(
       filter: {
         status: { eq: "published" }
