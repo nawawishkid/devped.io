@@ -136,12 +136,10 @@ const createLocaleNode = ({
 
 const createTechNode = ({
   node: postNode,
-  getNode,
   actions,
   createNodeId,
   createContentDigest,
 }) => {
-  const mdNode = getNode(postNode.parent)
   const {
     type,
     techTypes,
@@ -149,15 +147,11 @@ const createTechNode = ({
     original,
     ...restFrontmatter
   } = postNode.frontmatter
-  const detectedSlug = mdNode.fileAbsolutePath
-    .split(`/`)
-    .slice(-1)[0]
-    .split(`.`)[0]
   const content = {
     ...restFrontmatter,
     types: techTypes,
     original: original === false ? false : true,
-    slug: slug || detectedSlug,
+    slug: slug || postNode.slug,
   }
   const techNode = {
     id: createNodeId(`tech-${content.slug}`),
