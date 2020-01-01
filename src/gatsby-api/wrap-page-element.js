@@ -23,11 +23,9 @@ export default ({ element: initialElement, props }) => {
     }
   }
 
-  console.log(`translations: `, translations)
-
   if (pageType === `post`) {
     if (data) {
-      props.data.post = data.localizedPost || data.defaultPost
+      props.data.post = data.localizedPost || data.originalPost
     }
 
     element = <PostLayout {...props}>{initialElement}</PostLayout>

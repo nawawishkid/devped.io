@@ -37,11 +37,11 @@ export const query = graphql`
       ...allPostFields
       ...validTranslations
     }
-    defaultPost: post(
+    originalPost: post(
       status: { eq: "published" }
       slug: { eq: $slug }
       type: { eq: $postType }
-      locale: { eq: $defaultLocale }
+      original: { eq: true }
     ) {
       ...allPostFields
       ...validTranslations
