@@ -1,5 +1,7 @@
 # DevPed.io
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2ea89da2-fada-464a-955f-9c6e351749c7/deploy-status)](https://app.netlify.com/sites/pensive-williams-eacc81/deploys)
+
 ## Todos
 
 - [x] Support `requirements` post
