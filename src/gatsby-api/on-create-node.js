@@ -44,7 +44,7 @@ const createPostNode = ({
   const content = {
     title: frontmatter.title,
     status: frontmatter.status,
-    original: frontmatter.original || false,
+    original: frontmatter.original || true,
     type: frontmatter.type || pluralToSingular[fileNode.relativeDirectory],
     frontmatter,
     locale: frontmatter.locale || fileNode.name.split(`.`).slice(-1)[0],
