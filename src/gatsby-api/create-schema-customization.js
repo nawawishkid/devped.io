@@ -15,13 +15,15 @@ module.exports = ({ actions }) => {
       prev: Post
       parent: Post
     }
-    type Tech {
-      title: String
+    type Tech implements Node {
+      title: String!
       summary: String
-      type: String
+      types: [String!]!
+      locale: String!
+      original: Boolean!
       logo: String
-      websites: [String]!
-      slug: String
+      websites: [String!]!
+      slug: String!
     }
   `
 

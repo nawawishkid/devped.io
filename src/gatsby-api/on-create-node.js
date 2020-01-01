@@ -18,12 +18,15 @@ module.exports = props => {
     createPostNode(props)
   }
 
+  if (node.internal.type === `Post` && node.type === `tech`) {
+    createTechNode(props)
+  }
+
   if (
     node.internal.type === `File` &&
     node.internal.mediaType === `text/yaml` &&
     node.sourceInstanceName === `locales`
   ) {
-    console.log(`locale-node: `, node)
     createLocaleNode(props)
   }
 }
@@ -129,4 +132,45 @@ const createLocaleNode = ({
 
   createNode(localeNode)
   createParentChildLink({ parent: fileNode, child: localeNode })
+}
+
+const createTechNode = ({
+  node: postNode,
+  getNode,
+  actions,
+  createNodeId,
+  createContentDigest,
+}) => {
+  const mdNode = getNode(postNode.parent)
+  const {
+    type,
+    techTypes,
+    slug,
+    original,
+    ...restFrontmatter
+  } = postNode.frontmatter
+  const detectedSlug = mdNode.fileAbsolutePath
+    .split(`/`)
+    .slice(-1)[0]
+    .split(`.`)[0]
+  const content = {
+    ...restFrontmatter,
+    types: techTypes,
+    original: original || true,
+    slug: slug || detectedSlug,
+  }
+  const techNode = {
+    id: createNodeId(`tech-${postNode.frontmatter.slug}`),
+    children: [],
+    parent: postNode.id,
+    ...content,
+    internal: {
+      type: `Tech`,
+      contentDigest: createContentDigest(content),
+    },
+  }
+  const { createNode, createParentChildLink } = actions
+
+  createNode(techNode)
+  createParentChildLink({ parent: postNode, child: techNode })
 }
