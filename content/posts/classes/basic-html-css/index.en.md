@@ -6,6 +6,7 @@ type: "class"
 stack: ["HTML", "CSS"]
 status: "published"
 locale: en
+original: false
 children:
   - "/classes/basic-html-css/lessons/1-what-is-html/"
   - "/classes/basic-html-css/lessons/2-what-is-css/"

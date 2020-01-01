@@ -5,8 +5,6 @@ date: "2019-12-27"
 type: "class"
 stack: ["HTML", "CSS"]
 status: "published"
-# locale: uk
-original: true
 children:
   - "/classes/basic-html-css/lessons/1-what-is-html/"
   - "/classes/basic-html-css/lessons/2-what-is-css/"

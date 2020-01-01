@@ -9,7 +9,7 @@ status: published
 parent: "/classes/basic-html-css/"
 next: "/classes/basic-html-css/lessons/2-what-is-css/"
 locale: en
-original: true
+original: false
 ---
 
 this is en locale
