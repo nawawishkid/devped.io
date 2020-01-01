@@ -12,6 +12,7 @@ export const BasicPost = props => {
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
+      {props.children}
     </div>
   )
 }
@@ -151,7 +152,7 @@ export const RequirementPost = props => {
     </div>
   )
 }
-// export const TechPost = props => `This is tech post`
+
 export const StandalonePost = props => {
   const { post } = props.data
 

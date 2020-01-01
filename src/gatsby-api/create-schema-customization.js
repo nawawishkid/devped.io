@@ -4,7 +4,7 @@ module.exports = ({ actions }) => {
     type Post implements Node {
       tree: PostTree
       html: String
-      stack: [Tech]!
+      stack: [Tech!]!
       locale: String
       translations(status: String = "published", locales: [String!]): [Post]!
     }
@@ -15,13 +15,15 @@ module.exports = ({ actions }) => {
       prev: Post
       parent: Post
     }
-    type Tech {
-      title: String
+    type Tech implements Node {
+      title: String!
       summary: String
-      type: String
+      types: [String!]!
+      locale: String!
+      original: Boolean!
       logo: String
-      websites: [String]!
-      slug: String
+      websites: [String!]!
+      slug: String!
     }
   `
 

@@ -58,6 +58,19 @@ export const basicPostFields = graphql`
   }
 `
 
+export const allTechFields = graphql`
+  fragment allTechFields on Tech {
+    title
+    summary
+    types
+    locale
+    original
+    logo
+    websites
+    slug
+  }
+`
+
 export const allPostFields = graphql`
   fragment allPostFields on Post {
     ...basicPostFields
@@ -67,12 +80,7 @@ export const allPostFields = graphql`
     }
     html
     stack {
-      logo
-      slug
-      summary
-      title
-      type
-      websites
+      ...allTechFields
     }
     tree {
       ...allPostTreeFields
