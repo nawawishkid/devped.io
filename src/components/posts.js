@@ -121,10 +121,7 @@ export const LessonPost = props => {
 }
 export const ChapterPost = props => `This is chapter post`
 export const RequirementPost = props => {
-  const {
-    post,
-    tree: { children },
-  } = props.data
+  const { post } = props.data
   const { translate } = useLocale()
 
   return (
@@ -144,7 +141,7 @@ export const RequirementPost = props => {
       <div>
         <h3>{translate(`implemented_by`, `requirement-post`, `page`)}</h3>
         <ul>
-          {children.edges.map(({ node }) => (
+          {post.tree.children.map(({ node }) => (
             <PostItem {...node} key={node.id} />
           ))}
         </ul>
