@@ -13,6 +13,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
         edges {
           node {
             slug
+            # // @TODO: Exclude 'title' and use 'slug' instead
             title # for 'tech' post only
             type
             locale
@@ -69,10 +70,6 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
       const url = `/` + locale + node.slug
       const templatePrefix = node.type === `tech` ? `tech` : `single`
       const techTitle = node.type === `tech` ? node.title : null
-      console.log(`node.type: `, node.type)
-      console.log(`node.title: `, node.title)
-      console.log(`templatePrefix: `, templatePrefix)
-      console.log(`techTitle: `, techTitle)
 
       createPage({
         path: url,
@@ -84,6 +81,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           postType: node.type,
           defaultLocale,
           supportedLocales: locales,
+          // @TODO: Exclude 'techTtle' and use 'slug' instead
           techTitle,
         },
       })
