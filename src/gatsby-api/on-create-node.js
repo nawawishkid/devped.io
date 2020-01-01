@@ -44,7 +44,7 @@ const createPostNode = ({
   const content = {
     title: frontmatter.title,
     status: frontmatter.status,
-    original: frontmatter.original || true,
+    original: frontmatter.original === false ? false : true,
     type: frontmatter.type || pluralToSingular[fileNode.relativeDirectory],
     frontmatter,
     locale: frontmatter.locale || fileNode.name.split(`.`).slice(-1)[0],
@@ -156,7 +156,7 @@ const createTechNode = ({
   const content = {
     ...restFrontmatter,
     types: techTypes,
-    original: original || true,
+    original: original === false ? false : true,
     slug: slug || detectedSlug,
   }
   const techNode = {
