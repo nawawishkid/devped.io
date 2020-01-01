@@ -18,3 +18,4 @@
 - [ ] PWA
 - [ ] Newsletter
 - [x] i18n. See [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n)
+- [x] Display tech stack of a post in the post page

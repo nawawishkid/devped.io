@@ -2,6 +2,7 @@ import React from "react"
 import Link from "./link"
 import { useLocale } from "../contexts/locale"
 import PostItem from "./post-item"
+import PostTechs from "./post-techs"
 
 export const BasicPost = props => {
   const { post } = props.data
@@ -11,6 +12,7 @@ export const BasicPost = props => {
       This is basic post
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
+      <PostTechs stack={post.stack} />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       {props.children}
     </div>
@@ -44,6 +46,7 @@ export const ClassPost = props => {
         <PostTranslationList translations={post.validTranslations} />
       ) : null}
       <p>{post.updatedAt}</p>
+      <PostTechs stack={post.stack} />
       <div>
         <h3>
           {translate(`lessons`, `class-post`, `page`)} (
@@ -74,6 +77,7 @@ export const SeriesPost = props => {
       This is series post
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
+      <PostTechs stack={post.stack} />
       <div>
         <h3>{translate(`chapters`, `series-post`, `page`)}</h3>
         <ul>
@@ -109,6 +113,7 @@ export const LessonPost = props => {
         <PostTranslationList translations={validTranslations} />
       ) : null}
       <p>{post.updatedAt}</p>
+      <PostTechs stack={post.stack} />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       <div>
         {next ? <SiblingLesson node={localizePost(next, locale)} /> : null}
@@ -158,6 +163,7 @@ export const StandalonePost = props => {
       This is standalone post
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
+      <PostTechs stack={post.stack} />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
     </div>
   )
