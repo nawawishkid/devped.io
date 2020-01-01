@@ -13,6 +13,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
         edges {
           node {
             slug
+            title # for 'tech' post only
             type
             locale
           }
@@ -66,10 +67,16 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
   locales.forEach(locale => {
     allPost.edges.forEach(({ node }) => {
       const url = `/` + locale + node.slug
-      console.log(`url: `, url)
+      const templatePrefix = node.type === `tech` ? `tech` : `single`
+      const techTitle = node.type === `tech` ? node.title : null
+      console.log(`node.type: `, node.type)
+      console.log(`node.title: `, node.title)
+      console.log(`templatePrefix: `, templatePrefix)
+      console.log(`techTitle: `, techTitle)
+
       createPage({
         path: url,
-        component: path.resolve(`./src/templates/single-post.js`),
+        component: path.resolve(`./src/templates/${templatePrefix}-post.js`),
         context: {
           slug: node.slug,
           locale: locale,
@@ -77,6 +84,7 @@ module.exports = async ({ graphql, actions: { createPage } }) => {
           postType: node.type,
           defaultLocale,
           supportedLocales: locales,
+          techTitle,
         },
       })
     })
