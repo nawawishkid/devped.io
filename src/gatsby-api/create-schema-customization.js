@@ -4,7 +4,7 @@ module.exports = ({ actions }) => {
     type Post implements Node {
       tree: PostTree
       html: String
-      stack: [Tech]!
+      stack: [Tech!]!
       locale: String
       translations(status: String = "published", locales: [String!]): [Post]!
     }

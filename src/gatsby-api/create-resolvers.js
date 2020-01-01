@@ -11,7 +11,6 @@ const createPostResolver = () => ({
   Post: {
     translations: {
       async resolve(source, args, context) {
-        console.log(`resolve translations args: `, args)
         const localeFilter = { ne: source.locale }
 
         if (Array.isArray(args.locales) && args.locales.length) {
@@ -29,17 +28,25 @@ const createPostResolver = () => ({
           type: `Post`,
         })
 
-        // console.log(`translationNodes: `, translations)
-
         return translations || []
       },
     },
     stack: {
-      /**
-       * @TODO: Complete Post.stack resolver function
-       */
       async resolve(source, args, context) {
-        return []
+        const { stack } = source.frontmatter
+
+        if (!stack) return []
+
+        const results = await context.nodeModel.runQuery({
+          query: {
+            filter: {
+              title: { in: stack },
+            },
+          },
+          type: `Tech`,
+        })
+
+        return results || []
       },
     },
     html: {
@@ -79,8 +86,6 @@ const createPostTreeResolver = () => ({
           })
         }
 
-        console.log(`children: `, children)
-
         if (children && args.locale) {
           children = children.reduce((arr, child) => {
             let localizedChild
@@ -95,8 +100,6 @@ const createPostTreeResolver = () => ({
 
             return arr
           }, [])
-
-          console.log(`locChildren: `, children)
         }
 
         return children || []
