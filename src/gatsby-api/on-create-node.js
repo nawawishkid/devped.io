@@ -13,8 +13,8 @@ const pluralToSingular = {
 module.exports = props => {
   const { node } = props
 
-  // console.log(`node: `, node)
   if (node.internal.type === `MarkdownRemark`) {
+    addSlugFieldToMarkdowRemarkNode(props)
     createPostNode(props)
   }
 
@@ -29,6 +29,22 @@ module.exports = props => {
   ) {
     createLocaleNode(props)
   }
+}
+
+/**
+ * I have to add 'slug' field in order to make .tableOfContents works
+ * @see https://www.gatsbyjs.org/packages/gatsby-transformer-remark/#getting-table-of-contents
+ */
+const addSlugFieldToMarkdowRemarkNode = ({ node, actions, getNode }) => {
+  const fileNode = getNode(node.parent)
+  const { frontmatter } = node
+  const { createNodeField } = actions
+
+  createNodeField({
+    node,
+    name: `slug`,
+    value: frontmatter.slug || makeSlug(frontmatter.type, fileNode),
+  })
 }
 
 const createPostNode = ({
@@ -58,7 +74,7 @@ const createPostNode = ({
     },
   }
 
-  content.slug = frontmatter.slug || makeSlug(content, fileNode)
+  content.slug = frontmatter.slug || makeSlug(content.type, fileNode)
 
   const postNode = {
     id: createNodeId(`${content.slug}-${content.locale}`),
@@ -75,13 +91,13 @@ const createPostNode = ({
   createParentChildLink({ parent: mdNode, child: postNode })
 }
 
-const makeSlug = (content, fileNode) => {
+const makeSlug = (contentType, fileNode) => {
   let name = fileNode.name.split(`.`)[0]
 
   name = name === `index` ? `` : name + `/`
   const slug = `/${fileNode.relativeDirectory}/${name}`
 
-  switch (content.type) {
+  switch (contentType) {
     case `series`:
     case `standalone`:
     case `chapter`:
