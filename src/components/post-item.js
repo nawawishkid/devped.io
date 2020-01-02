@@ -15,11 +15,7 @@ const PostItem = props => {
       <small>
         {translate(`language`, `post-item`, `component`)}: {props.locale}
       </small>
-      {/* <p>
-      {Array.isArray(props.tree.children)
-        ? `${props.tree.children.length} lessons`
-        : null}
-    </p> */}
+      {props.excerpt ? <p>{props.excerpt}</p> : null}
     </div>
   )
 }
