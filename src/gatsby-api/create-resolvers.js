@@ -9,6 +9,43 @@ module.exports = ({ createResolvers }) => {
 
 const createPostResolver = () => ({
   Post: {
+    excerpt: {
+      async resolve(src, _, context) {
+        let result
+        const mdNode = await context.nodeModel.runQuery({
+          query: { filter: { id: { eq: src.parent }, excerpt: { ne: null } } },
+          type: `MarkdownRemark`,
+          firstOnly: true,
+        })
+
+        if (mdNode && mdNode.__gatsby_resolved) {
+          result = mdNode.__gatsby_resolved.excerpt
+        }
+
+        return result || ``
+      },
+    },
+    tableOfContents: {
+      async resolve(source, _, context) {
+        const mdNode = await context.nodeModel.runQuery({
+          query: {
+            filter: {
+              id: { eq: source.parent },
+              tableOfContents: { ne: null },
+            },
+          },
+          type: `MarkdownRemark`,
+          firstOnly: true,
+        })
+        let result
+
+        if (mdNode && mdNode.__gatsby_resolved) {
+          result = mdNode.__gatsby_resolved.tableOfContents
+        }
+
+        return result || ``
+      },
+    },
     translations: {
       async resolve(source, args, context) {
         const localeFilter = { ne: source.locale }
@@ -32,7 +69,7 @@ const createPostResolver = () => ({
       },
     },
     stack: {
-      async resolve(source, args, context) {
+      async resolve(source, _, context) {
         const { stack } = source.frontmatter
 
         if (!stack) return []
@@ -50,7 +87,7 @@ const createPostResolver = () => ({
       },
     },
     html: {
-      async resolve(source, args, context) {
+      async resolve(source, _, context) {
         const mdNode = await context.nodeModel.runQuery({
           query: { filter: { id: { eq: source.parent }, html: { ne: `` } } },
           type: `MarkdownRemark`,
@@ -106,7 +143,7 @@ const createPostTreeResolver = () => ({
       },
     },
     parent: {
-      async resolve(source, args, context) {
+      async resolve(source, _, context) {
         const { treeRef } = source
         let parent
 
@@ -118,7 +155,7 @@ const createPostTreeResolver = () => ({
       },
     },
     prev: {
-      async resolve(source, args, context) {
+      async resolve(source, _, context) {
         const { treeRef } = source
         let prev
 
@@ -130,7 +167,7 @@ const createPostTreeResolver = () => ({
       },
     },
     next: {
-      async resolve(source, args, context) {
+      async resolve(source, _, context) {
         const { treeRef } = source
         let next
 
