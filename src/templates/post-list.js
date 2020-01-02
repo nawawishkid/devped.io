@@ -11,7 +11,6 @@ const PostList = ({ data, pageContext, path }) => {
   const heading = translate(`all_${postType}`, `post-list`, `page`)
   const localizedPosts = posts.reduce((arr, edge) => {
     const { node: post } = edge
-    console.log(`post: `, post)
     let localizedPost
 
     if (post.locale !== locale) {
@@ -24,7 +23,6 @@ const PostList = ({ data, pageContext, path }) => {
 
     return arr
   }, [])
-  console.log(`locPosts: `, localizedPosts)
 
   return (
     <>
