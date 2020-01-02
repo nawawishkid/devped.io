@@ -16,8 +16,14 @@
   - [x] ~~Code highlighting~~
   - [x] ~~Support emoji~~
 - [x] ~~SEO~~
-- [ ] Google Analytics
+- [x] ~~Google Analytics~~
 - [ ] PWA
 - [ ] Newsletter
 - [x] ~~i18n. See [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n)~~
 - [x] ~~Display tech stack of a post in the post page~~
+
+---
+
+## Notes
+
+- In regard to switching language by changing URL, how will you handle user navigating back in URL history which also switch current language back to previous one? It's a bad UX.
