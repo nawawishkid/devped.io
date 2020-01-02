@@ -7,6 +7,8 @@ module.exports = ({ actions }) => {
       stack: [Tech!]!
       locale: String
       translations(status: String = "published", locales: [String!]): [Post]!
+      tableOfContents: String!
+      excerpt: String!
     }
 
     type PostTree {
