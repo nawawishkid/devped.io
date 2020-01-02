@@ -65,6 +65,7 @@ module.exports = {
             resolve: `gatsby-remark-emoji`,
             options: { ascii: true },
           },
+          `gatsby-remark-prismjs`,
         ],
       },
     },
