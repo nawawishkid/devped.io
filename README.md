@@ -4,20 +4,20 @@
 
 ## Todos
 
-- [x] Support `requirements` post
+- [x] ~~Support `requirements` post~~
 - [ ] Display techs by type
 - [ ] Support post cover image
-- [x] Display only `'published'` posts
+- [x] ~~Display only `'published'` posts~~
 - [ ] Design layout
 - [ ] Make post's table of content
 - [ ] Add post's excerpt
 - Markdown content
   - [ ] Consider using `mdx`?
-  - [ ] Code highlighting
+  - [x] ~~Code highlighting~~
   - [x] ~~Support emoji~~
-- [x] SEO
+- [x] ~~SEO~~
 - [ ] Google Analytics
 - [ ] PWA
 - [ ] Newsletter
-- [x] i18n. See [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n)
-- [x] Display tech stack of a post in the post page
+- [x] ~~i18n. See [example](https://github.com/gatsbyjs/gatsby/tree/master/examples/using-i18n)~~
+- [x] ~~Display tech stack of a post in the post page~~
