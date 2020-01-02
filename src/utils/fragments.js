@@ -49,6 +49,7 @@ export const basicPostFields = graphql`
     locale
     status
     original
+    excerpt
   }
 
   fragment postTranslationsFields on Post {
@@ -74,6 +75,7 @@ export const allTechFields = graphql`
 export const allPostFields = graphql`
   fragment allPostFields on Post {
     ...basicPostFields
+    tableOfContents
     createdAt
     frontmatter {
       ...allPostFrontmatterFields
