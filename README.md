@@ -9,8 +9,11 @@
 - [ ] Support post cover image
 - [x] ~~Display only `'published'` posts~~
 - [ ] Design layout
-- [ ] Make post's table of content
-- [ ] Add post's excerpt
+- [ ] Make post's table of contents
+  - [ ] Display all headings in a document with link to the heading
+  - [ ] Display them in hierarchical way
+  - [ ] Makes it collapsible if it has sub-heading
+- [x] Add post's excerpt
 - Markdown content
   - [ ] Consider using `mdx`?
   - [x] ~~Code highlighting~~
