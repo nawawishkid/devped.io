@@ -75,6 +75,11 @@ export const allTechFields = graphql`
 export const allPostFields = graphql`
   fragment allPostFields on Post {
     ...basicPostFields
+    headings {
+      depth
+      value
+      slug
+    }
     tableOfContents
     createdAt
     frontmatter {

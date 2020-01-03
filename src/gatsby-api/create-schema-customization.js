@@ -9,6 +9,7 @@ module.exports = ({ actions }) => {
       translations(status: String = "published", locales: [String!]): [Post]!
       tableOfContents: String!
       excerpt: String!
+      headings: [PostHeading!]!
     }
 
     type PostTree {
@@ -25,6 +26,12 @@ module.exports = ({ actions }) => {
       original: Boolean!
       logo: String
       websites: [String!]!
+      slug: String!
+    }
+
+    type PostHeading {
+      depth: Int!
+      value: String!
       slug: String!
     }
   `

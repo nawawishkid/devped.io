@@ -1,3 +1,5 @@
+const slugger = require(`github-slugger`)()
+
 module.exports = ({ createResolvers }) => {
   const resolver = {
     ...createPostResolver(),
@@ -9,6 +11,34 @@ module.exports = ({ createResolvers }) => {
 
 const createPostResolver = () => ({
   Post: {
+    headings: {
+      async resolve(src, _, context) {
+        let result
+        const mdNode = await context.nodeModel.runQuery({
+          query: {
+            filter: {
+              id: { eq: src.parent },
+              headings: {
+                elemMatch: { value: { ne: null }, depth: { ne: null } },
+              },
+            },
+          },
+          type: `MarkdownRemark`,
+          firstOnly: true,
+        })
+
+        if (mdNode && mdNode.__gatsby_resolved) {
+          result = mdNode.__gatsby_resolved.headings.map(heading => ({
+            ...heading,
+            slug: `#${slugger.slug(heading.value)}`,
+          }))
+        }
+
+        slugger.reset()
+
+        return result || []
+      },
+    },
     excerpt: {
       async resolve(src, _, context) {
         let result
