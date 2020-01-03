@@ -4,6 +4,21 @@ import { useLocale } from "../contexts/locale"
 import PostItem from "./post-item"
 import PostTechs from "./post-techs"
 
+const TableOfContents = ({ headings }) => {
+  return (
+    <div>
+      <h2>Table of contents</h2>
+      <ul>
+        {headings.map(heading => (
+          <a href={heading.slug} key={heading.slug}>
+            <li dangerouslySetInnerHTML={{ __html: heading.value }} />
+          </a>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 export const BasicPost = props => {
   const { post } = props.data
 
@@ -13,6 +28,7 @@ export const BasicPost = props => {
       <h1>{post.title}</h1>
       <p>{post.updatedAt}</p>
       <PostTechs stack={post.stack} />
+      <TableOfContents headings={post.headings} />
       <div dangerouslySetInnerHTML={{ __html: post.html }} />
       {props.children}
     </div>
